@@ -1,0 +1,21 @@
+Documentation:
+  Enabled: false
+
+AllCops:
+  Include:
+    - '**/Rakefile'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+  TargetRubyVersion: 2.3
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: context_dependent
+
+Metrics/LineLength:
+  Max: 120
+
+Style/BlockComments:
+  Enabled: false

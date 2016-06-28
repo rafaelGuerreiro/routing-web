@@ -1,0 +1,14 @@
+sudo: false
+cache: bundler
+language: ruby
+rvm:
+  - 2.3.0
+before_install: gem update --remote bundler
+install:
+  - bundle install --retry=3
+script:
+  - bundle exec rspec
+  - bundle exec rubocop
+addons:
+  code_climate:
+    repo_token: 2954f9056a49591d01a312d4dac9e79f0407260d7a98702ee2a0c6eb1b223452

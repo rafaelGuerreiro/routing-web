@@ -11,22 +11,22 @@ describe User, type: :model do
     before { create(:user) }
 
     context 'presence' do
-      it { should validate_presence_of :first_name }
-      it { should validate_presence_of :last_name }
       it { should validate_presence_of :email }
       it { should validate_presence_of :encrypted_password }
     end
 
     context 'uniqueness' do
-      it { should validate_uniqueness_of :email }
-      it { should validate_uniqueness_of :username }
+      it { should validate_uniqueness_of(:email).case_insensitive }
     end
   end
 
   context 'devise' do
-    # :database_authenticatable, :registerable, :confirmable,
-    # :recoverable, :lockable, :rememberable, :trackable, :validatable
-
-    it 'is database_authenticable'
+    it 'is database_authenticatable, registerable, confirmable, recoverable, lockable, ' \
+       'rememberable, trackable, validatable' do
+      expect(User.devise_modules).to contain_exactly(
+        :database_authenticatable, :registerable, :confirmable,
+        :recoverable, :lockable, :rememberable, :trackable, :validatable
+      )
+    end
   end
 end

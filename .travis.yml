@@ -5,7 +5,7 @@ rvm:
   - 2.3.0
 before_install: gem update --remote bundler
 install:
-  - bundle install --retry=3
+  - bundle install --retry=3 --without development production
 before_script:
   - psql -c 'create database routing_web_test;' -U postgres
 script:

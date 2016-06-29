@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   validates :email, :encrypted_password, presence: true
   validates :email, uniqueness: { case_sensitive: false }
 
+  def google_maps_key
+    'this will be the google maps key'
+  end
+
   private
 
   def downcase_email

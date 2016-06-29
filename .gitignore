@@ -42,3 +42,6 @@ bower.json
 
 .DS_Store
 *.gitignore.*
+
+# Ignore application configuration
+/config/application.yml

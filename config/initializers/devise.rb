@@ -101,10 +101,8 @@ Devise.setup do |config|
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 11
 
-  p Rails.application.secrets.secret_token
-
   # Set up a pepper to generate the hashed password.
-  config.pepper = Rails.application.secrets.secret_token
+  config.pepper = Figaro.env.devise_pepper
 
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false

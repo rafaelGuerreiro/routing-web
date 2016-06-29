@@ -13,6 +13,8 @@ gem 'puma'
 gem 'workers'
 gem 'rubyzip'
 
+gem 'figaro'
+
 group :development, :test do
   gem 'byebug'
   gem 'rubocop'

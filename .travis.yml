@@ -9,6 +9,8 @@ install:
 script:
   - bundle exec rspec
   - bundle exec rubocop
+services:
+  - postgresql
 addons:
   code_climate:
     repo_token: 2954f9056a49591d01a312d4dac9e79f0407260d7a98702ee2a0c6eb1b223452

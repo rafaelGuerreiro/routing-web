@@ -11,11 +11,17 @@ AllCops:
     - 'bin/**/*'
   TargetRubyVersion: 2.3
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/BracesAroundHashParameters:
   EnforcedStyle: context_dependent
 
-Metrics/LineLength:
-  Max: 120
-
 Style/BlockComments:
   Enabled: false
+
+Metrics/LineLength:
+  Max: 120

@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: routing_web_production
-  username: routing_web
+  database: <%= ENV['ROUTING_WEB_DATABASE'] %># routing_web_production
+  username: <%= ENV['ROUTING_WEB_DATABASE_USERNAME'] %># routing_web
   password: <%= ENV['ROUTING_WEB_DATABASE_PASSWORD'] %>

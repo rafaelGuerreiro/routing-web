@@ -4,7 +4,8 @@ engines:
     enabled: true
     config:
       languages:
-      - ruby
+        - ruby
+        - javascript
   fixme:
     enabled: true
   rubocop:
@@ -13,8 +14,10 @@ engines:
     enabled: true
 ratings:
   paths:
-  - Gemfile.lock
-  - app/**.rb
-  - lib/**.rb
+    - Gemfile.lock
+    - "**.rb"
 exclude_paths:
-- spec/
+  - config/
+  - db/
+  - spec/
+  - vendor/

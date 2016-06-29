@@ -7,6 +7,8 @@ AllCops:
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
     - 'script/**/*'
     - 'bin/**/*'
   TargetRubyVersion: 2.3
@@ -25,3 +27,10 @@ Style/BlockComments:
 
 Metrics/LineLength:
   Max: 120
+
+# %w[] shows that it will return an array
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%i': '[]'
+    '%w': '[]'
+    '%W': '[]'

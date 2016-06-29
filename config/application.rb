@@ -22,5 +22,7 @@ module RoutingWeb
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.secret_token = 'bc804f45a0bad17d34670bab6352c4fcc4176a8c12f21402ab9ad273628999a7096fc8a9f674a9bee78bcede017f5cc0a8f69d68886119a102f00906866b3f6e'
   end
 end

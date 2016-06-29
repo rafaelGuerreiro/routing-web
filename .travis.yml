@@ -6,7 +6,10 @@ rvm:
 before_install: gem update --remote bundler
 install:
   - bundle install --retry=3
+before_script:
+  - psql -c 'create database routing_web_test;' -U postgres
 script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rspec
   - bundle exec rubocop
 services:

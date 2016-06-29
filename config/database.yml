@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: routing-web_development
+  database: routing_web_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -57,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: routing-web_test
+  database: routing_web_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: routing-web_production
-  username: routing-web
-  password: <%= ENV['ROUTING-WEB_DATABASE_PASSWORD'] %>
+  database: routing_web_production
+  username: routing_web
+  password: <%= ENV['ROUTING_WEB_DATABASE_PASSWORD'] %>

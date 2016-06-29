@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User, type: :model do
-  context 'valid factory' do
+  context 'factory' do
     it 'has a valid factory' do
       expect(build(:user)).to be_valid
     end
@@ -21,12 +21,15 @@ describe User, type: :model do
   end
 
   context 'devise' do
-    it 'is database_authenticatable, registerable, confirmable, recoverable, lockable, ' \
-       'rememberable, trackable, validatable' do
-      expect(User.devise_modules).to contain_exactly(
+    let(:modules) do
+      [
         :database_authenticatable, :registerable, :confirmable,
         :recoverable, :lockable, :rememberable, :trackable, :validatable
-      )
+      ]
+    end
+
+    it 'should contain exactly the defined modules' do
+      expect(User.devise_modules).to contain_exactly(*modules)
     end
   end
 end

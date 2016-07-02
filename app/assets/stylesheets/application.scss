@@ -19,7 +19,6 @@
 
 body {
   padding-top: 71px;
-  background: url('/assets/footer_lodyas.png');
 }
 
 .navbar {
@@ -63,6 +62,10 @@ body {
 
 .section-title {
   text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+
+label {
+  margin-bottom: 0;
 }
 
 @mixin make-margin($size: 1) {

@@ -1,48 +1,36 @@
 require 'rails_helper'
 
 describe UploadController, type: :controller do
-  context 'user is signed in' do
+  context 'when user is signed in' do
     sign_in_user
 
     describe 'GET new' do
-      it 'renders new.html.erb when user is signed in' do
-        get :new
+      before(:each) { get :new }
 
-        expect(response.ok?).to be_truthy
-        expect(response.redirect?).to be_falsy
-        expect(response.redirect_url).to be_nil
-      end
+      it { is_expected.to be_ok }
+      it { is_expected.to render_template(:new) }
     end
 
     describe 'POST create' do
-      it 'can be accessed by signed in users' do
-        post :create
+      before(:each) { post :create }
 
-        expect(response.redirect?).to be_truthy
-        expect(response.redirect_url).to eq(root_url)
-      end
+      it { is_expected.to be_redirected_to(root_url) }
     end
   end
 
-  context 'user is signed out' do
+  context 'when user is not signed in' do
     describe 'GET new' do
-      it 'redirects to about_url when user is not signed in' do
-        get :new
+      before(:each) { get :new }
 
-        expect(response.ok?).to be_falsy
-        expect(response.redirect?).to be_truthy
-
-        expect(response.redirect_url).to eq(about_url)
-      end
+      it { is_expected.to_not be_ok }
+      it { is_expected.to be_redirected_to(about_url) }
     end
 
     describe 'POST create' do
-      it 'cannot be accessed by a signed out user' do
-        post :create
+      before(:each) { post :create }
 
-        expect(response.redirect?).to be_truthy
-        expect(response.redirect_url).to eq(new_user_session_url)
-      end
+      it { is_expected.to_not be_ok }
+      it { is_expected.to be_redirected_to(new_user_session_url) }
     end
   end
 end

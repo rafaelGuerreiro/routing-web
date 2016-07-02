@@ -15,3 +15,9 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+$(document).on('page:change', function() {
+  setTimeout(close_all_alerts, 5000);
+
+  function close_all_alerts() { $('.flash-alert-container .alert').alert('close'); }
+});

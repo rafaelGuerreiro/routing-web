@@ -1,12 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="<%= root_url %>">
         <%= image_tag 'mapfre-original.png', alt: 'Mapfre Seguradora' %>
       </a>
     </div>
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav">
       <%= render 'layouts/navigation_links' %>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
       <%= render 'layouts/nav_links_for_auth' %>
     </ul>
   </div>

@@ -1,9 +1,9 @@
-<div class="col-md-4 col-md-offset-4 col-sm-8 col-md-offset-2 well well-opacity-2">
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f| %>
-    <h2 class="margin-top-0 text-primary text-center section-title">
-      Sign in
-    </h2>
+<section class="col-md-4 col-sm-8 well">
+  <h2 class="text-primary section-title">
+    Sign in
+  </h2>
 
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="form-group">
@@ -26,7 +26,7 @@
       </div>
     <% end %>
 
-    <div class="row">
+    <div class="row actions">
       <div class="<%= devise_mapping.registerable? ? 'col-sm-6' : 'col-sm-12' %>">
         <%= f.submit 'Sign in', :class => 'btn btn-primary btn-block' %>
       </div>
@@ -38,4 +38,4 @@
     </div>
 
   <% end %>
-</div>
+</section>

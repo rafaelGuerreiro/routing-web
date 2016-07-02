@@ -13,6 +13,15 @@ describe UploadController, type: :controller do
         expect(response.redirect_url).to be_nil
       end
     end
+
+    describe 'POST create' do
+      it 'can be accessed by signed in users' do
+        post :create
+
+        expect(response.redirect?).to be_truthy
+        expect(response.redirect_url).to eq(root_url)
+      end
+    end
   end
 
   context 'user is signed out' do
@@ -24,6 +33,15 @@ describe UploadController, type: :controller do
         expect(response.redirect?).to be_truthy
 
         expect(response.redirect_url).to eq(about_url)
+      end
+    end
+
+    describe 'POST create' do
+      it 'cannot be accessed by a signed out user' do
+        post :create
+
+        expect(response.redirect?).to be_truthy
+        expect(response.redirect_url).to eq(new_user_session_url)
       end
     end
   end

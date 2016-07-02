@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   root 'upload#new'
+  get '/about' => 'about#index'
   post '/upload' => 'upload#create'
 
   namespace :api do

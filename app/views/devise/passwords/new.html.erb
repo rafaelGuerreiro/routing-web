@@ -1,0 +1,17 @@
+<div class="col-md-6 col-md-offset-3 col-sm-10 col-md-offset-1 well well-opacity-2">
+  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :role => 'form'}) do |f| %>
+
+    <h2 class="margin-top-0 text-warning text-center section-title">
+      Forgot your password?
+    </h2>
+    <p class="text-center"><strong class="text-warning">We'll send password reset instructions.</strong></p>
+
+    <%= devise_error_messages! %>
+
+    <div class="form-group margin-top-1">
+      <%= f.label :email %>
+      <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
+    </div>
+     <%= f.submit 'Reset password', :class => 'btn btn-warning btn-block' %>
+  <% end %>
+</div>

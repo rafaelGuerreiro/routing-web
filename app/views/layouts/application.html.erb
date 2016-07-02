@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>RoutingWeb</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>Mapfre Routing</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <%= image_tag 'mapfre-original.png', alt: 'Mapfre Seguradora' %>
+          </a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Sign in</a></li>
+        </ul>
+      </div>
+    </nav>
 
-<%= yield %>
+    <div class="flash-alert-container">
+      <% flash.each do |name, msg| -%>
+        <div class="fade in alert alert-dismissible alert-<%= name %>">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <%= msg %>
+        </div>
+      <% end -%>
+    </div>
 
-</body>
+    <main class="container-fluid">
+      <div class="row">
+        <%= yield %>
+      </div>
+    </main>
+  </body>
 </html>

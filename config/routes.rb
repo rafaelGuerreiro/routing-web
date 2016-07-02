@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :upload, only: [:new, :create]
+
+  root 'upload#new'
+  post '/upload' => 'upload#create'
 
   namespace :api do
     namespace :v1 do

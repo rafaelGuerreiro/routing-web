@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe ApplicationController, type: :controller do
   it 'prevents CSRF attacks with exception' do
     strategy = ActionController::RequestForgeryProtection::ProtectionMethods::Exception

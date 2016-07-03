@@ -78,6 +78,9 @@ GEM
       i18n (~> 0.5)
     figaro (1.1.1)
       thor (~> 0.14)
+    fuubar (2.0.0)
+      rspec (~> 3.0)
+      ruby-progressbar (~> 1.4)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -224,6 +227,7 @@ DEPENDENCIES
   factory_girl_rails
   faker (~> 1.6.3)
   figaro
+  fuubar
   jquery-rails
   pg (~> 0.15)
   puma

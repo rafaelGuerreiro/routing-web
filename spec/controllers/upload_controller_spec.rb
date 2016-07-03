@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe UploadController, type: :controller do
   context 'when user is signed in' do
     sign_in_user

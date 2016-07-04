@@ -10,7 +10,7 @@ before_script:
   - psql -c 'create database routing_web_test;' -U postgres
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rspec
+  - bundle exec rspec --color --require rails_helper --format Fuubar
   - bundle exec rubocop
 services:
   - postgresql

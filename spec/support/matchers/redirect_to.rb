@@ -1,12 +1,12 @@
 require 'rspec/expectations'
 
-def redirect?(controller)
-  controller.response.respond_to?(:redirect?) && response.redirect?
+def redirect?(response)
+  response.redirect?
 end
 
 RSpec::Matchers.define :redirect do
-  match do |controller|
-    redirect?(controller)
+  match do |response|
+    redirect?(response)
   end
 
   failure_message do |_|
@@ -19,23 +19,23 @@ RSpec::Matchers.define :redirect do
 end
 
 RSpec::Matchers.define :redirect_to do |url|
-  match do |controller|
-    return false unless redirect?(controller)
+  match do |response|
+    return false unless redirect?(response)
 
-    controller.response.respond_to?(:redirect_url) && controller.response.redirect_url == url
+    response.respond_to?(:redirect_url) && response.redirect_url == url
   end
 
-  failure_message do |controller|
+  failure_message do |response|
     msg = "Expected that the request was redirected to `#{url}`."
 
-    return msg unless redirect?(controller)
-    msg << " But was redirected to `#{controller.response.redirect_url}` instead."
+    return msg unless redirect?(response)
+    msg << " But was redirected to `#{response.redirect_url}` instead."
   end
 
-  failure_message_when_negated do |controller|
+  failure_message_when_negated do |response|
     msg = "Expected that the request wasn't redirected to `#{url}`."
 
-    return msg if redirect?(controller)
+    return msg if redirect?(response)
     msg << " But wasn't redirected."
   end
 end

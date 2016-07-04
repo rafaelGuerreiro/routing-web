@@ -1,9 +1,7 @@
 require 'rspec/expectations'
 
 RSpec::Matchers.define :be_ok do
-  match do |response|
-    response.ok?
-  end
+  match(&:ok?)
 
   failure_message do |response|
     "Expected that the response would be ok. The status was #{response.status}"

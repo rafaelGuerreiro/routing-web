@@ -6,8 +6,6 @@ describe User, type: :model do
   end
 
   describe 'validations' do
-    before { create(:user) }
-
     describe 'presence' do
       it { is_expected.to validate_presence_of :email }
       it { is_expected.to validate_presence_of :encrypted_password }

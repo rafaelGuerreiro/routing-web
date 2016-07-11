@@ -18,6 +18,8 @@ gem 'figaro'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '~> 5.0'
 
+gem 'premailer-rails'
+
 group :development, :test do
   gem 'byebug'
   gem 'rubocop'

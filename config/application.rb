@@ -32,5 +32,7 @@ module RoutingWeb
     end
 
     Rails::Generators.fallbacks[:rspec] = :test_unit
+
+    config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   end
 end

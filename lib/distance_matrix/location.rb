@@ -17,17 +17,22 @@ module DistanceMatrix
     end
 
     def to_query_parameter
-      join(' ').gsub(/\s+/, '+')
+      param = join(' ')
+
+      return unless param
+      param.gsub(/\s+/, '+')
     end
 
     def join(delimiter = nil)
+      return if invalid?
+
       "#{@city}#{delimiter}#{@state}"
     end
 
     private
 
     def harmonize(str)
-      return nil unless str.is_a?(String) && str.present?
+      return unless str.is_a?(String) && str.present?
 
       str.upcase.strip
     end

@@ -1,0 +1,15 @@
+<div class="container-fluid main-container">
+  <div class="col-md-8 col-sm-10 center-block">
+    <h1 class="text-center text-primary">Welcome to Mapfre Routing!</h1>
+
+    <h3 class="text-center">You can confirm your account email through the link below:</h3>
+
+    <p><%= link_to 'Confirm my account!', confirmation_url(@resource, confirmation_token: @token), class: 'btn btn-block btn-lg btn-default btn-primary' %></p>
+
+    <p class="text-center">
+      <small>Or you can copy and paste the above url in your browser:</small>
+      <br />
+      <small><%= link_to confirmation_url(@resource, confirmation_token: @token), confirmation_url(@resource, confirmation_token: @token) %><small>
+    </p>
+  </div>
+</div>

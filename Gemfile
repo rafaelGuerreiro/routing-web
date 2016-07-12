@@ -18,8 +18,11 @@ gem 'figaro'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '~> 5.0'
 
+gem 'premailer-rails'
+
 group :development, :test do
   gem 'byebug'
+  gem 'rubocop'
 
   gem 'fuubar'
 end
@@ -39,7 +42,6 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem 'rubocop'
 end
 
 group :production do

@@ -32,5 +32,9 @@ module RoutingWeb
     end
 
     Rails::Generators.fallbacks[:rspec] = :test_unit
+
+    config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

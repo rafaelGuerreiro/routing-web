@@ -6,8 +6,6 @@ describe User, type: :model do
   end
 
   describe 'validations' do
-    before { create(:user) }
-
     describe 'presence' do
       it { is_expected.to validate_presence_of :email }
       it { is_expected.to validate_presence_of :encrypted_password }
@@ -19,6 +17,8 @@ describe User, type: :model do
   end
 
   describe 'devise modules' do
+    subject { User.devise_modules }
+
     let(:modules) do
       [
         :database_authenticatable, :registerable, :confirmable,
@@ -26,8 +26,6 @@ describe User, type: :model do
       ]
     end
 
-    it 'should contain exactly the defined modules' do
-      expect(User.devise_modules).to contain_exactly(*modules)
-    end
+    it { is_expected.to contain_exactly(*modules) }
   end
 end

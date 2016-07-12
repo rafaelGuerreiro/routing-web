@@ -9,15 +9,42 @@
 #   end
 # end
 describe DeviseHelper, type: :helper do
-  class DummyResource
-    attr_reader :errors
+  class Dummy
+    extend ActiveModel::Naming
+    include ActiveModel::Validations
 
-    def initialize(errors = [])
-      @errors = errors
+    attr_reader :attribute, :errors
+
+    validates :attribute, presence: true
+
+    def initialize
+      @attribute = nil
+      @errors = ActiveModel::Errors.new(self)
+    end
+
+    def validate!(context = nil)
+      valid?(context) || errors.add(:attribute, :blank, message: 'cannot be nil')
     end
   end
 
-  let(:dummy_resource) { DummyResource.new(['error', 'another error']) }
+  class DummyResource
+    def initialize(model = nil)
+      @model = model
+    end
+
+    def errors
+      return [] unless @model
+
+      @model.validate!
+      @model.errors
+    end
+
+    def self.model_name
+      Dummy.model_name
+    end
+  end
+
+  let(:dummy_resource) { DummyResource.new(Dummy.new) }
   let(:dummy_resource_without_errors) { DummyResource.new }
 
   context 'when there are errors' do
@@ -29,6 +56,16 @@ describe DeviseHelper, type: :helper do
     end
 
     describe '#devise_error_messages!' do
+      it 'returns an html snippet with the sentence and all errors' do
+        expect(helper.devise_error_messages!).to eq(
+          <<-HTML
+<div id="error_explanation" class="alert alert-danger">
+  <p class="margin-0"><strong>2 errors prohibited this dummy from being saved:</strong></p>
+  <ul><li>Attribute can&#39;t be blank</li><li>Attribute cannot be nil</li></ul>
+</div>
+          HTML
+        )
+      end
     end
 
     describe '#devise_error_messages?' do
@@ -45,6 +82,9 @@ describe DeviseHelper, type: :helper do
     end
 
     describe '#devise_error_messages!' do
+      it 'returns an empty string' do
+        expect(helper.devise_error_messages!).to eq('')
+      end
     end
 
     describe '#devise_error_messages?' do

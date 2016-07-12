@@ -13,10 +13,10 @@ module DeviseHelper
 
   def html_error_explanation
     html = <<-HTML
-    <div id="error_explanation" class="alert alert-danger">
-      <p class="margin-0"><strong>#{sentence}</strong></p>
-      <ul>#{messages}</ul>
-    </div>
+<div id="error_explanation" class="alert alert-danger">
+  <p class="margin-0"><strong>#{sentence}</strong></p>
+  <ul>#{messages}</ul>
+</div>
     HTML
 
     html.html_safe

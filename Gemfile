@@ -20,6 +20,8 @@ gem 'sass-rails', '~> 5.0'
 
 gem 'premailer-rails'
 
+gem 'high_voltage', '~> 3.0.0'
+
 group :development, :test do
   gem 'byebug'
   gem 'rubocop'

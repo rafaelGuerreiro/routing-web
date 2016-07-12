@@ -86,6 +86,7 @@ GEM
       ruby-progressbar (~> 1.4)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    high_voltage (3.0.0)
     htmlentities (4.3.4)
     i18n (0.7.0)
     jquery-rails (4.1.1)
@@ -238,6 +239,7 @@ DEPENDENCIES
   faker (~> 1.6.3)
   figaro
   fuubar
+  high_voltage (~> 3.0.0)
   jquery-rails
   pg (~> 0.15)
   premailer-rails

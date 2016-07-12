@@ -2,7 +2,7 @@ class UploadController < ApplicationController
   before_action :authenticate_user!, except: :new
 
   def new
-    redirect_to about_url unless user_signed_in?
+    redirect_to page_url('about') unless user_signed_in?
   end
 
   def create

@@ -24,7 +24,7 @@ describe UploadController, type: :controller do
       subject { response }
 
       it { is_expected.to_not be_ok }
-      it { is_expected.to redirect_to(about_url) }
+      it { is_expected.to redirect_to(page_url('about')) }
     end
 
     describe 'POST create' do

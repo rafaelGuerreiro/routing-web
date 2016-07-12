@@ -1,8 +1,9 @@
 describe DistanceMatrix::Location do
-  describe 'Hashie' do
-    subject { DistanceMatrix::Location.new(state: 'SP', city: 'Sao Paulo') }
-    it { is_expected.to be_a(Hashie) }
-    it { is_expected.to be_an(ActiveModel::Validations) }
+  describe 'modules' do
+    subject { DistanceMatrix::Location }
+
+    it { is_expected.to include(Hashie) }
+    it { is_expected.to include(ActiveModel::Validations) }
   end
 
   describe '.new' do
@@ -105,28 +106,20 @@ describe DistanceMatrix::Location do
     end
 
     describe '#to_s' do
-      it 'is always nil' do
-        expect(subject.to_s).to be_nil
-      end
+      it { expect(subject.to_s).to be_nil }
     end
 
     describe '#to_query_parameter' do
-      it 'is always nil' do
-        expect(subject.to_query_parameter).to be_nil
-      end
+      it { expect(subject.to_query_parameter).to be_nil }
     end
 
     describe '#join' do
       context 'when passing an argument' do
-        it 'is always nil' do
-          expect(subject.join('&')).to be_nil
-        end
+        it { expect(subject.join('&')).to be_nil }
       end
 
       context 'when passing no arguments' do
-        it 'is always nil' do
-          expect(subject.join).to be_nil
-        end
+        it { expect(subject.join).to be_nil }
       end
     end
   end

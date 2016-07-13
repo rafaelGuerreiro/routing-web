@@ -59,13 +59,8 @@ describe DistanceMatrix::Location do
   context 'when location is valid' do
     subject { DistanceMatrix::Location.new(state: 'rj', city: 'rio de janeiro') }
 
-    describe '#valid?' do
-      it { is_expected.to be_valid }
-    end
-
-    describe '#invalid?' do
-      it { is_expected.to_not be_invalid }
-    end
+    it { is_expected.to be_valid }
+    it { is_expected.to_not be_invalid }
 
     describe '#to_s' do
       it 'joins the city and the state by a comma and space' do
@@ -97,13 +92,8 @@ describe DistanceMatrix::Location do
   context 'when location is invalid' do
     subject { DistanceMatrix::Location.new(state: nil, city: 'Porto Alegre') }
 
-    describe '#valid?' do
-      it { is_expected.to_not be_valid }
-    end
-
-    describe '#invalid?' do
-      it { is_expected.to be_invalid }
-    end
+    it { is_expected.to_not be_valid }
+    it { is_expected.to be_invalid }
 
     describe '#to_s' do
       it { expect(subject.to_s).to be_nil }

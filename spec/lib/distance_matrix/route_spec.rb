@@ -7,58 +7,65 @@ describe DistanceMatrix::Route do
     it { is_expected.to include(ActiveModel::Validations) }
   end
 
+  subject { DistanceMatrix::Route.new(origin: origin, destination: destination) }
+
   let(:valid_location_sp) { DistanceMatrix::Location.new(city: 'SAO PAULO', state: 'SP') }
-  let(:valid_location_rj) { DistanceMatrix::Location.new(city: 'RIO DE JANEIRO', state: 'RJ') }
   let(:valid_location_rs) { DistanceMatrix::Location.new(city: 'PORTO ALEGRE', state: 'RS') }
 
   let(:invalid_location_sp) { DistanceMatrix::Location.new(city: nil, state: 'SP') }
-  let(:invalid_location_rj) { DistanceMatrix::Location.new(city: nil, state: 'RJ') }
   let(:invalid_location_rs) { DistanceMatrix::Location.new(city: nil, state: 'RS') }
 
   context 'when origin is not a valid location' do
-    subject { DistanceMatrix::Route.new(origin: invalid_location_sp, destination: valid_location_rs) }
+    let(:origin) { invalid_location_sp }
+    let(:destination) { valid_location_rs }
 
     it { is_expected.to be_invalid }
     it { is_expected.to_not be_valid }
   end
 
   context 'when origin is nil' do
-    subject { DistanceMatrix::Route.new(origin: nil, destination: valid_location_rs) }
+    let(:origin) { nil }
+    let(:destination) { valid_location_rs }
 
     it { is_expected.to be_invalid }
     it { is_expected.to_not be_valid }
   end
 
   context 'when destination is not a valid location' do
-    subject { DistanceMatrix::Route.new(origin: valid_location_sp, destination: invalid_location_rs) }
+    let(:origin) { valid_location_sp }
+    let(:destination) { invalid_location_rs }
 
     it { is_expected.to be_invalid }
     it { is_expected.to_not be_valid }
   end
 
   context 'when destination is nil' do
-    subject { DistanceMatrix::Route.new(origin: valid_location_sp, destination: nil) }
+    let(:origin) { valid_location_sp }
+    let(:destination) { nil }
 
     it { is_expected.to be_invalid }
     it { is_expected.to_not be_valid }
   end
 
   context 'when both origin and destination are not valid locations' do
-    subject { DistanceMatrix::Route.new(origin: invalid_location_sp, destination: invalid_location_rs) }
+    let(:origin) { invalid_location_sp }
+    let(:destination) { invalid_location_rs }
 
     it { is_expected.to be_invalid }
     it { is_expected.to_not be_valid }
   end
 
   context 'when both origin and destination are nil' do
-    subject { DistanceMatrix::Route.new(origin: nil, destination: nil) }
+    let(:origin) { nil }
+    let(:destination) { nil }
 
     it { is_expected.to be_invalid }
     it { is_expected.to_not be_valid }
   end
 
   context 'when both origin and destination are valid locations' do
-    subject { DistanceMatrix::Route.new(origin: valid_location_sp, destination: valid_location_rs) }
+    let(:origin) { valid_location_sp }
+    let(:destination) { valid_location_rs }
 
     it { is_expected.to_not be_invalid }
     it { is_expected.to be_valid }

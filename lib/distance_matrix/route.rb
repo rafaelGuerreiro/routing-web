@@ -6,8 +6,9 @@ module DistanceMatrix
 
     attr_reader :origin, :destination, :error_message
 
-    validates :origin, :destination, presence: true
-    validates_with DistanceMatrix::Validator::LocationValidator
+    validates :origin, :destination, presence: true, location: true
+
+    # validates_with DistanceMatrix::Validator::RouteValidator
 
     def initialize(origin:, destination:)
       @origin = origin

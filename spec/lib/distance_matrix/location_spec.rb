@@ -6,43 +6,58 @@ describe DistanceMatrix::Location do
     it { is_expected.to include(ActiveModel::Validations) }
   end
 
+  subject { DistanceMatrix::Location.new(state: state, city: city) }
+
   describe '.new' do
     context 'when state is not a valid String' do
       describe 'empty state name' do
-        subject { DistanceMatrix::Location.new(state: '', city: 'Sao Paulo') }
+        let(:state) { '' }
+        let(:city) { 'Sao Paulo' }
+
         it { is_expected.to be_invalid }
       end
 
       describe 'numeric state name' do
-        subject { DistanceMatrix::Location.new(state: 123, city: 'Sao Paulo') }
+        let(:state) { 123 }
+        let(:city) { 'Sao Paulo' }
+
         it { is_expected.to be_invalid }
       end
 
       describe 'nil state name' do
-        subject { DistanceMatrix::Location.new(state: nil, city: 'Sao Paulo') }
+        let(:state) { nil }
+        let(:city) { 'Sao Paulo' }
+
         it { is_expected.to be_invalid }
       end
     end
 
     context 'when city is not a valid String' do
       describe 'empty city name' do
-        subject { DistanceMatrix::Location.new(state: 'SP', city: '   ') }
+        let(:state) { 'SP' }
+        let(:city) { '   ' }
+
         it { is_expected.to be_invalid }
       end
 
       describe 'numeric city name' do
-        subject { DistanceMatrix::Location.new(state: 'SP', city: 234) }
+        let(:state) { 'SP' }
+        let(:city) { 234 }
+
         it { is_expected.to be_invalid }
       end
 
       describe 'nil city name' do
-        subject { DistanceMatrix::Location.new(state: 'SP', city: nil) }
+        let(:state) { 'SP' }
+        let(:city) { nil }
+
         it { is_expected.to be_invalid }
       end
     end
 
     context 'when both state and city are valid String' do
-      subject { DistanceMatrix::Location.new(state: '  Sp ', city: ' sao Paulo') }
+      let(:state) { '  Sp ' }
+      let(:city) { ' sao Paulo' }
 
       it { is_expected.to be_valid }
 
@@ -57,7 +72,8 @@ describe DistanceMatrix::Location do
   end
 
   context 'when location is valid' do
-    subject { DistanceMatrix::Location.new(state: 'rj', city: 'rio de janeiro') }
+    let(:state) { 'rj' }
+    let(:city) { 'rio de janeiro' }
 
     it { is_expected.to be_valid }
     it { is_expected.to_not be_invalid }
@@ -90,7 +106,8 @@ describe DistanceMatrix::Location do
   end
 
   context 'when location is invalid' do
-    subject { DistanceMatrix::Location.new(state: nil, city: 'Porto Alegre') }
+    let(:state) { nil }
+    let(:city) { 'Porto Alegre' }
 
     it { is_expected.to_not be_valid }
     it { is_expected.to be_invalid }

@@ -8,8 +8,6 @@ module DistanceMatrix
 
     validates :origin, :destination, presence: true, location: true
 
-    # validates_with DistanceMatrix::Validator::RouteValidator
-
     def initialize(origin:, destination:)
       @origin = origin
       @destination = destination

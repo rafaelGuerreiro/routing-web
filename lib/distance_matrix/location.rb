@@ -34,7 +34,7 @@ module DistanceMatrix
     def harmonize(str)
       return unless str.is_a?(String) && str.present?
 
-      str.upcase.strip
+      str.upcase.strip.freeze
     end
   end
 end

@@ -103,6 +103,26 @@ describe DistanceMatrix::Location do
         end
       end
     end
+
+    context 'when editing the state' do
+      it 'is immutable' do
+        expect { subject.state << 'AS' }.to raise_error(RuntimeError, "can't modify frozen String")
+      end
+
+      it 'duplicates the original string' do
+        expect { state << 'AS' }.to_not change { subject.state }
+      end
+    end
+
+    context 'when editing the city' do
+      it 'is immutable' do
+        expect { subject.city << 'AS' }.to raise_error(RuntimeError, "can't modify frozen String")
+      end
+
+      it 'duplicates the original string' do
+        expect { city << 'AS' }.to_not change { subject.city }
+      end
+    end
   end
 
   context 'when location is invalid' do

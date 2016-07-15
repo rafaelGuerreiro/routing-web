@@ -15,59 +15,114 @@ describe DistanceMatrix::Route do
   let(:invalid_location_sp) { DistanceMatrix::Location.new(city: nil, state: 'SP') }
   let(:invalid_location_rs) { DistanceMatrix::Location.new(city: nil, state: 'RS') }
 
-  context 'when origin is not a valid location' do
-    let(:origin) { invalid_location_sp }
+  context 'when route is invalid' do
+    context 'when origin is not a valid location' do
+      let(:origin) { invalid_location_sp }
+      let(:destination) { valid_location_rs }
+
+      it { is_expected.to be_invalid }
+
+      describe '#distance' do
+        it 'is always -1' do
+          expect { subject.distance = 10.5 }.to_not change { subject.distance }.from(-1)
+        end
+      end
+
+      describe '#error_message?' do
+        it { expect(subject.error_message?).to be_truthy }
+      end
+    end
+
+    context 'when origin is nil' do
+      let(:origin) { nil }
+      let(:destination) { valid_location_rs }
+
+      it { is_expected.to be_invalid }
+
+      describe '#distance' do
+        it 'is always -1' do
+          expect { subject.distance = 10.5 }.to_not change { subject.distance }.from(-1)
+        end
+      end
+
+      describe '#error_message?' do
+        it { expect(subject.error_message?).to be_truthy }
+      end
+    end
+
+    context 'when destination is not a valid location' do
+      let(:origin) { valid_location_sp }
+      let(:destination) { invalid_location_rs }
+
+      it { is_expected.to be_invalid }
+
+      describe '#distance' do
+        it 'is always -1' do
+          expect { subject.distance = 10.5 }.to_not change { subject.distance }.from(-1)
+        end
+      end
+
+      describe '#error_message?' do
+        it { expect(subject.error_message?).to be_truthy }
+      end
+    end
+
+    context 'when destination is nil' do
+      let(:origin) { valid_location_sp }
+      let(:destination) { nil }
+
+      it { is_expected.to be_invalid }
+
+      describe '#distance' do
+        it 'is always -1' do
+          expect { subject.distance = 10.5 }.to_not change { subject.distance }.from(-1)
+        end
+      end
+
+      describe '#error_message?' do
+        it { expect(subject.error_message?).to be_truthy }
+      end
+    end
+
+    context 'when both origin and destination are not valid locations' do
+      let(:origin) { invalid_location_sp }
+      let(:destination) { invalid_location_rs }
+
+      it { is_expected.to be_invalid }
+
+      describe '#distance' do
+        it 'is always -1' do
+          expect { subject.distance = 10.5 }.to_not change { subject.distance }.from(-1)
+        end
+      end
+
+      describe '#error_message?' do
+        it { expect(subject.error_message?).to be_truthy }
+      end
+    end
+
+    context 'when both origin and destination are nil' do
+      let(:origin) { nil }
+      let(:destination) { nil }
+
+      it { is_expected.to be_invalid }
+
+      describe '#distance' do
+        it 'is always -1' do
+          expect { subject.distance = 10.5 }.to_not change { subject.distance }.from(-1)
+        end
+      end
+
+      describe '#error_message?' do
+        it { expect(subject.error_message?).to be_truthy }
+      end
+    end
+  end
+
+  context 'when route is valid' do
+    let(:origin) { valid_location_sp }
     let(:destination) { valid_location_rs }
 
-    it { is_expected.to be_invalid }
-    it { is_expected.to_not be_valid }
-  end
-
-  context 'when origin is nil' do
-    let(:origin) { nil }
-    let(:destination) { valid_location_rs }
-
-    it { is_expected.to be_invalid }
-    it { is_expected.to_not be_valid }
-  end
-
-  context 'when destination is not a valid location' do
-    let(:origin) { valid_location_sp }
-    let(:destination) { invalid_location_rs }
-
-    it { is_expected.to be_invalid }
-    it { is_expected.to_not be_valid }
-  end
-
-  context 'when destination is nil' do
-    let(:origin) { valid_location_sp }
-    let(:destination) { nil }
-
-    it { is_expected.to be_invalid }
-    it { is_expected.to_not be_valid }
-  end
-
-  context 'when both origin and destination are not valid locations' do
-    let(:origin) { invalid_location_sp }
-    let(:destination) { invalid_location_rs }
-
-    it { is_expected.to be_invalid }
-    it { is_expected.to_not be_valid }
-  end
-
-  context 'when both origin and destination are nil' do
-    let(:origin) { nil }
-    let(:destination) { nil }
-
-    it { is_expected.to be_invalid }
-    it { is_expected.to_not be_valid }
-  end
-
-  context 'when both origin and destination are valid locations' do
-    let(:origin) { valid_location_sp }
-    let(:destination) { valid_location_rs }
-
-    it { is_expected.to_not be_invalid }
     it { is_expected.to be_valid }
 
     describe '#distance' do
@@ -87,22 +142,26 @@ describe DistanceMatrix::Route do
 
       context 'when distance is invalid' do
         context 'when distance is nil' do
-          it 'does not change' do
-            expect { subject.distance = nil }.to_not change { subject.distance }
-          end
+          it { expect { subject.distance = nil }.to_not change { subject.distance } }
         end
 
         context 'when distance is not a Numeric' do
-          it 'does not change' do
-            expect { subject.distance = '10' }.to_not change { subject.distance }
-          end
+          it { expect { subject.distance = '10' }.to_not change { subject.distance } }
         end
 
         context 'when distance is a negative number' do
-          it 'does not change' do
-            expect { subject.distance = -2 }.to_not change { subject.distance }
-          end
+          it { expect { subject.distance = -2 }.to_not change { subject.distance } }
         end
+      end
+    end
+
+    describe '#error_message?' do
+      it 'is mutable' do
+        expect { subject.error_message = :not_found }.to change { subject.error_message? }.from(false).to(true)
+      end
+
+      it 'can be truthy and the subject will still be valid' do
+        expect { subject.error_message = :not_found }.to_not change { subject.valid? }
       end
     end
   end

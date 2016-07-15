@@ -20,11 +20,18 @@ module DistanceMatrix
     end
 
     def distance=(distance)
+      distance = -1 if invalid?
       @distance = distance if distance.is_a?(::Numeric) && distance >= 0
     end
 
     def error_message?
+      return errors.present? if invalid?
       @error_message.present?
+    end
+
+    def error_message=(error_message)
+      error_message = nil if invalid?
+      @error_message = error_message if error_message.is_a?(::Symbol)
     end
   end
 end

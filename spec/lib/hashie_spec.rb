@@ -45,9 +45,9 @@ describe Hashie do
     context 'when objects are exactly the same' do
       let(:other) { subject }
 
-      it { is_expected.to be(other) }
-      it { is_expected.to eql(other) }
-      it { is_expected.to eq(other) }
+      it { is_expected.to be(other), 'other' }
+      it { is_expected.to eql(other), 'other' }
+      it { is_expected.to eq(other), 'other' }
 
       describe '#hash' do
         it 'has the same hash' do

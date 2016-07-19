@@ -9,16 +9,16 @@ describe DistanceMatrix::Route do
 
   subject { DistanceMatrix::Route.new(origin: origin, destination: destination) }
 
-  let(:valid_location_sp) { DistanceMatrix::Location.new(city: 'SAO PAULO', state: 'SP') }
-  let(:valid_location_rs) { DistanceMatrix::Location.new(city: 'PORTO ALEGRE', state: 'RS') }
+  let(:sp) { DistanceMatrix::Location.new(city: 'SAO PAULO', state: 'SP') }
+  let(:rs) { DistanceMatrix::Location.new(city: 'PORTO ALEGRE', state: 'RS') }
 
-  let(:invalid_location_sp) { DistanceMatrix::Location.new(city: nil, state: 'SP') }
-  let(:invalid_location_rs) { DistanceMatrix::Location.new(city: nil, state: 'RS') }
+  let(:invalid_sp) { DistanceMatrix::Location.new(city: nil, state: 'SP') }
+  let(:invalid_rs) { DistanceMatrix::Location.new(city: nil, state: 'RS') }
 
   context 'when route is invalid' do
     context 'when origin is not a valid location' do
-      let(:origin) { invalid_location_sp }
-      let(:destination) { valid_location_rs }
+      let(:origin) { invalid_sp }
+      let(:destination) { rs }
 
       it { is_expected.to be_invalid }
 
@@ -35,7 +35,7 @@ describe DistanceMatrix::Route do
 
     context 'when origin is nil' do
       let(:origin) { nil }
-      let(:destination) { valid_location_rs }
+      let(:destination) { rs }
 
       it { is_expected.to be_invalid }
 
@@ -51,8 +51,8 @@ describe DistanceMatrix::Route do
     end
 
     context 'when destination is not a valid location' do
-      let(:origin) { valid_location_sp }
-      let(:destination) { invalid_location_rs }
+      let(:origin) { sp }
+      let(:destination) { invalid_rs }
 
       it { is_expected.to be_invalid }
 
@@ -68,7 +68,7 @@ describe DistanceMatrix::Route do
     end
 
     context 'when destination is nil' do
-      let(:origin) { valid_location_sp }
+      let(:origin) { sp }
       let(:destination) { nil }
 
       it { is_expected.to be_invalid }
@@ -85,8 +85,8 @@ describe DistanceMatrix::Route do
     end
 
     context 'when both origin and destination are not valid locations' do
-      let(:origin) { invalid_location_sp }
-      let(:destination) { invalid_location_rs }
+      let(:origin) { invalid_sp }
+      let(:destination) { invalid_rs }
 
       it { is_expected.to be_invalid }
 
@@ -120,8 +120,8 @@ describe DistanceMatrix::Route do
   end
 
   context 'when route is valid' do
-    let(:origin) { valid_location_sp }
-    let(:destination) { valid_location_rs }
+    let(:origin) { sp }
+    let(:destination) { rs }
 
     it { is_expected.to be_valid }
 

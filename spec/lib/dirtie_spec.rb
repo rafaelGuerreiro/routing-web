@@ -32,14 +32,22 @@ describe Dirtie do
     end
 
     describe '#dirty?' do
-      it 'is false by default' do
+      it 'is true after changing' do
         expect(subject.dirty?).to be_truthy
+      end
+
+      it 'is false after cleaning' do
+        expect { subject.copy_value }.to change { subject.dirty? }.from(true).to(false)
       end
     end
 
     describe '#clean?' do
-      it 'is true by default' do
+      it 'is false after changing' do
         expect(subject.clean?).to be_falsy
+      end
+
+      it 'is true after cleaning' do
+        expect { subject.copy_value }.to change { subject.clean? }.from(false).to(true)
       end
     end
   end
@@ -55,6 +63,18 @@ describe Dirtie do
       it 'is true by default' do
         expect(subject.clean?).to be_truthy
       end
+    end
+  end
+
+  describe '#clean!' do
+    it 'is private' do
+      expect(subject.private_methods).to include(:clean!)
+    end
+  end
+
+  describe '#dirty!' do
+    it 'is private' do
+      expect(subject.private_methods).to include(:dirty!)
     end
   end
 end

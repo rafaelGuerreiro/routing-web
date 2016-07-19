@@ -1,5 +1,4 @@
 require 'digest/sha1'
-require 'byebug'
 
 module Hashie
   def hash

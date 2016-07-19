@@ -1,34 +1,36 @@
 describe Hashie do
-  class DummyClass
-    include Hashie
-    include PrettyStringfy
+  before do
+    stub_const('DummyClass', Class.new do
+      include Hashie
+      include PrettyStringfy
 
-    attr_reader :first_value, :second_value
+      attr_reader :first_value, :second_value
 
-    def initialize(first_value, second_value)
-      @first_value = first_value
-      @second_value = second_value
-    end
+      def initialize(first_value, second_value)
+        @first_value = first_value
+        @second_value = second_value
+      end
 
-    def inspect
-      to_s
-    end
-  end
+      def inspect
+        to_s
+      end
+    end)
 
-  class OtherDummyClass
-    include Hashie
-    include PrettyStringfy
+    stub_const('OtherDummyClass', Class.new do
+      include Hashie
+      include PrettyStringfy
 
-    attr_reader :first_value, :second_value
+      attr_reader :first_value, :second_value
 
-    def initialize(first_value, second_value)
-      @first_value = first_value
-      @second_value = second_value
-    end
+      def initialize(first_value, second_value)
+        @first_value = first_value
+        @second_value = second_value
+      end
 
-    def inspect
-      to_s
-    end
+      def inspect
+        to_s
+      end
+    end)
   end
 
   let(:first_value) { 'a string value' }

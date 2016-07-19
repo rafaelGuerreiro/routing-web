@@ -29,5 +29,5 @@ describe User, type: :model do
     it { is_expected.to contain_exactly(*modules) }
   end
 
-  # TODO test email being downcased
+  # TODO: test email being downcased
 end

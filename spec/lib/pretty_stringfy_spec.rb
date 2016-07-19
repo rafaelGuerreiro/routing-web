@@ -1,23 +1,25 @@
 describe PrettyStringfy do
-  class DummyClassWithoutAttribute
-    include PrettyStringfy
+  before do
+    stub_const('DummyClassWithoutAttribute', Class.new do
+      include PrettyStringfy
+    end)
+
+    stub_const('DummyClass', Class.new do
+      include PrettyStringfy
+
+      attr_reader :first_value, :second_value
+
+      def initialize(first_value, second_value)
+        @first_value = first_value
+        @second_value = second_value
+      end
+    end)
   end
 
   context 'when there are no attributes' do
     subject { DummyClassWithoutAttribute.new.to_s }
 
     it { is_expected.to eq('[ DummyClassWithoutAttribute => (no attributes) ]') }
-  end
-
-  class DummyClass
-    include PrettyStringfy
-
-    attr_reader :first_value, :second_value
-
-    def initialize(first_value, second_value)
-      @first_value = first_value
-      @second_value = second_value
-    end
   end
 
   context 'when there are attributes' do

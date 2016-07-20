@@ -1,4 +1,5 @@
 require 'set'
+require 'byebug'
 
 module DistanceMatrix
   class RouteCluster
@@ -30,16 +31,9 @@ module DistanceMatrix
     alias length size
 
     def to_cluster
-      return @cluster if clean?
+      return @cluster || [] if clean?
 
-      @cluster = []
-
-      @routes.each_slice(100) do |slice|
-        @cluster << to_cluster_hash(slice)
-      end
-
-      clean!
-      @cluster.freeze
+      @cluster = gather_cluster
     end
 
     def routes
@@ -50,7 +44,7 @@ module DistanceMatrix
       return to_cluster unless block_given?
 
       to_cluster.each do |hash|
-        yield hash
+        yield hash[:origin], hash[:routes], hash[:query_parameter]
       end
     end
 
@@ -58,6 +52,17 @@ module DistanceMatrix
 
     def valid_route?(route)
       route.is_a?(DistanceMatrix::Route) && route.valid? && route.origin == @origin
+    end
+
+    def gather_cluster
+      cluster = []
+
+      @routes.each_slice(100) do |slice|
+        cluster << to_cluster_hash(slice)
+      end
+
+      clean!
+      cluster.freeze
     end
 
     def to_cluster_hash(routes)

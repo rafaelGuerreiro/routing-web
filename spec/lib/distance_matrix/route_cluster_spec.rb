@@ -148,19 +148,90 @@ describe DistanceMatrix::RouteCluster do
         expect { cluster << 'aa' }.to raise_error(RuntimeError, "can't modify frozen Array")
       end
 
-      it 'is memoized until an element is added' do
-        expect(subject).to receive(:to_cluster_hash).once
-        3.times { subject.to_cluster }
+      it 'slices the routes in 100 elements groups' do
+        356.times do |number|
+          destination = DistanceMatrix::Location.new(state: 'RS', city: "CITY ##{number}")
+          subject << DistanceMatrix::Route.new(origin: sp, destination: destination)
+        end
 
-        subject << sp_sc
+        expect(subject.size).to eq(358)
+        expect(subject.to_cluster).to have(4).clusters
+      end
 
-        expect(subject).to receive(:to_cluster_hash).once
-        3.times { subject.to_cluster }
+      it 'process each slice and convert to query parameters' do
+        params = subject.to_cluster.first[:query_parameter]
+        expect(params).to eq('origins=SAO+PAULO+SP&destinations=PORTO+ALEGRE+RS|RIO+DE+JANEIRO+RJ')
+      end
+
+      it 'adds the origin and the routes for further checking' do
+        routes = subject.to_cluster.first[:routes]
+        origin = subject.to_cluster.first[:origin]
+
+        expect(routes).to contain_exactly(*[sp_rs, sp_rj])
+        expect(origin).to eq(sp)
+      end
+
+      context 'when cluster is dirty' do
+        it 'gathers cluster once' do
+          expect(subject).to receive(:gather_cluster).once.and_call_original
+          expect { subject.to_cluster }.to change { subject.clean? }.from(false).to(true)
+        end
+      end
+
+      context 'when cluster is clean' do
+        before { subject.to_cluster }
+
+        it 'never gather cluster because it was already memoized' do
+          expect(subject).to_not receive(:gather_cluster).and_call_original
+          expect { subject.to_cluster }.to_not change { subject.clean? }
+        end
       end
     end
 
     context 'when there are no routes' do
       subject { DistanceMatrix::RouteCluster.new(origin: sp) }
+
+      it 'returns an empty Array' do
+        expect(subject.to_cluster).to eql([])
+      end
+    end
+  end
+
+  describe '#each' do
+    subject { DistanceMatrix::RouteCluster.new(origin: sp, routes: [sp_rs, sp_rj]) }
+
+    context 'when there are routes' do
+      it 'iterates over the cluster, yielding the origin, routes and the query_parameter' do
+        subject.each do |origin, routes, query_parameter|
+          expect(origin).to eq(sp)
+          expect(routes).to contain_exactly(*[sp_rs, sp_rj])
+          expect(query_parameter).to eq('origins=SAO+PAULO+SP&destinations=PORTO+ALEGRE+RS|RIO+DE+JANEIRO+RJ')
+        end
+      end
+    end
+
+    context 'when there are no routes' do
+      subject { DistanceMatrix::RouteCluster.new(origin: sp) }
+
+      it 'returns the cluster' do
+        expect(subject.each).to eq([])
+      end
+    end
+
+    context 'when a block is given' do
+      it 'yields the block passing 3 arguments' do
+        subject.each do |origin, routes, query_parameter|
+          expect(origin).to eq(sp)
+          expect(routes).to contain_exactly(*[sp_rs, sp_rj])
+          expect(query_parameter).to eq('origins=SAO+PAULO+SP&destinations=PORTO+ALEGRE+RS|RIO+DE+JANEIRO+RJ')
+        end
+      end
+    end
+
+    context 'when no block is given' do
+      it 'returns the cluster' do
+        expect(subject.each.size).to eq(1)
+      end
     end
   end
 end

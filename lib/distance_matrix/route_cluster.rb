@@ -11,6 +11,7 @@ module DistanceMatrix
     attr_reader :origin
 
     validates :origin, presence: true, location: true
+    validates :routes, presence: true
 
     def initialize(origin:, routes: [])
       @origin = origin

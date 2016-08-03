@@ -34,6 +34,34 @@ describe DistanceMatrix::RouteCluster do
 
       expect(cluster.routes).to contain_exactly(*routes)
     end
+
+    context 'when origin is invalid' do
+      context 'when there are routes' do
+        subject { DistanceMatrix::RouteCluster.new(origin: invalid_sp, routes: [invalid_sp_rs]) }
+
+        it { is_expected.to be_invalid }
+      end
+
+      context 'when there are no routes' do
+        subject { DistanceMatrix::RouteCluster.new(origin: invalid_sp) }
+
+        it { is_expected.to be_invalid }
+      end
+    end
+
+    context 'when origin is valid' do
+      context 'when there are routes' do
+        subject { DistanceMatrix::RouteCluster.new(origin: sp, routes: [sp_rs]) }
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'when there are no routes' do
+        subject { DistanceMatrix::RouteCluster.new(origin: sp) }
+
+        it { is_expected.to be_invalid }
+      end
+    end
   end
 
   describe '#<<' do

@@ -8,8 +8,8 @@ module DistanceMatrix
     validates :state, :city, presence: true
 
     def initialize(state:, city:)
-      @state = harmonize(state)
-      @city = harmonize(city)
+      @state = state.harmonized(:upcase)
+      @city = city.harmonized(:upcase)
     end
 
     def to_s
@@ -27,14 +27,6 @@ module DistanceMatrix
       return if invalid?
 
       "#{@city}#{delimiter}#{@state}"
-    end
-
-    private
-
-    def harmonize(str)
-      return unless str.is_a?(String) && str.present?
-
-      str.upcase.strip.freeze
     end
   end
 end

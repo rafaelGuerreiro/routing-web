@@ -1,14 +1,4 @@
 describe CoreExtensions::String::Harmonizer do
-  # def harmonized(*methods)
-  #   return self unless self.is_a?(String)
-  #   return nil unless self.present?
-  #
-  #   str = self.strip
-  #
-  #   methods.each { |m| str = str.__send__(m) }
-  #   return str.freeze
-  # end
-
   describe '#harmonized' do
     context 'when the object is a String' do
       context 'when string is present' do
@@ -34,18 +24,104 @@ describe CoreExtensions::String::Harmonizer do
           it 'calls various methods' do
             expect(subject.harmonized(:upcase, :reverse)).to eq('GNIRTS TSET A')
           end
+
+          context 'when the string can be stripped' do
+            it 'does not modify the original string' do
+              expect { subject.harmonized(:upcase!) }.to_not change { subject }
+            end
+          end
+
+          context 'when the string cannot be stripped' do
+            subject { 'a test string' }
+
+            it 'does not modify the original string' do
+              expect { subject.harmonized(:upcase!) }.to_not change { subject }
+            end
+          end
+
+          context 'when method is in hash' do
+            it 'accepts hashes with arguments' do
+              expect(subject.harmonized(method: :<<, arguments: ' TEST')).to eq('a test string TEST')
+            end
+
+            it 'does not accept hashes without arguments' do
+              expect(subject.harmonized(method: :reverse)).to eq('a test string')
+            end
+          end
+
+          context 'when method is in array' do
+            it 'accepts arrays with arguments' do
+              expect(subject.harmonized(:upcase, [:<<, ' test'])).to eq('A TEST STRING test')
+            end
+
+            it 'accepts arrays without arguments' do
+              expect(subject.harmonized(:upcase, [:reverse])).to eq('GNIRTS TSET A')
+            end
+          end
         end
 
         context 'when invalid methods are called' do
-          it 'ignores the method when string does not respond to it' do
-            expect(subject.harmonized(:a_weird_method, :reverse)).to eq('gnirts tset a')
+          context 'when String does not respond to method' do
+            it 'is ignored' do
+              expect(subject.harmonized(:a_weird_method, :reverse)).to eq('gnirts tset a')
+            end
+
+            context 'when method is in the hash' do
+              it 'is ignored' do
+                method = {
+                  method: :a_weird_method,
+                  arguments: ['a weird parameter']
+                }
+
+                expect(subject.harmonized(method, :reverse)).to eq('gnirts tset a')
+              end
+
+              context 'when hash has no :method key' do
+                it 'is ignored' do
+                  expect(subject.harmonized({ arguments: [] }, :reverse)).to eq('gnirts tset a')
+                end
+              end
+
+              context 'when hash has no :arguments key' do
+                it 'is ignored' do
+                  expect(subject.harmonized({ method: 'a_weird_method' }, :reverse)).to eq('gnirts tset a')
+                end
+              end
+            end
+
+            context 'when method is in the array' do
+              it 'is ignored' do
+                expect(subject.harmonized([:a_weird_method, 'a weird parameter'], :reverse)).to eq('gnirts tset a')
+              end
+
+              context 'when array is empty' do
+                it 'is ignored' do
+                  expect(subject.harmonized([], :reverse)).to eq('gnirts tset a')
+                end
+              end
+
+              context 'when array has no arguments' do
+                it 'is ignored' do
+                  expect(subject.harmonized([:a_weird_method], :reverse)).to eq('gnirts tset a')
+                end
+              end
+            end
           end
 
-          it 'ignores the method when the return is not a string' do
-            expect(subject.harmonized(:length, :reverse)).to eq('gnirts tset a')
+          context 'when the method is not a Symbol nor a String' do
+            it 'is ignored' do
+              expect(subject.harmonized(123, 'reverse')).to eq('gnirts tset a')
+            end
+          end
+
+          context 'when the type returned by the method is not a String' do
+            it 'is ignored' do
+              expect(subject.harmonized(:length, :reverse)).to eq('gnirts tset a')
+            end
           end
         end
       end
+
       context 'when string is blank' do
         subject { '   ' }
 

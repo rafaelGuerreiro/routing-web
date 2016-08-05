@@ -2,13 +2,17 @@ module DistanceMatrix
   class Status
     include Hashie
 
-    def self.status(id, message = nil)
-      @status ||= {}
-      @status[id] = new(id: id, message: message)
-    end
+    class << self
+      def parse(id)
+        @status[id.to_sym]
+      end
 
-    def self.parse(id)
-      @status[id]
+      private
+
+      def status(id, message = nil)
+        @status ||= {}
+        @status[id] = new(id: id, message: message)
+      end
     end
 
     attr_reader :id, :message

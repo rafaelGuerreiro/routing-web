@@ -155,13 +155,19 @@ describe DistanceMatrix::Route do
       end
     end
 
-    describe '#error_message?' do
+    describe '#error_message=' do
       it 'is mutable' do
         expect { subject.error_message = :not_found }.to change { subject.error_message? }.from(false).to(true)
       end
 
       it 'can be truthy and the subject will still be valid' do
         expect { subject.error_message = :not_found }.to_not change { subject.valid? }
+      end
+
+      it 'accepts any message' do
+        not_found = '[NOT_FOUND] The origin and/or destination of this pairing could not be geocoded.'
+
+        expect { subject.error_message = not_found }.to change { subject.error_message }.from(nil).to(not_found)
       end
     end
   end

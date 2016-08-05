@@ -29,7 +29,7 @@ module DistanceMatrix
 
     def error_message=(error_message)
       error_message = nil if invalid?
-      @error_message = error_message if error_message.is_a?(::Symbol)
+      @error_message = error_message
     end
   end
 end

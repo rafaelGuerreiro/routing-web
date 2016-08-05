@@ -1,6 +1,8 @@
+require 'set'
+
 module PrettyStringfy
   def to_s
-    "[ #{self.class} => #{map_attributes(instance_values)} ]"
+    "(#{self.class} => #{map_attributes(instance_values)})"
   end
 
   private
